@@ -1,7 +1,7 @@
 {
   "name": "urequire-rc-coffee-script",
   "description": "uRequire ResourceConverter for 'coffee-script'. See http://urequire.org/resourceconverters.coffee#the-alternative-less-verbose-array-way",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "http://uRequire.org",
   "author": {
     "name": "Agelos Pikoulas",
@@ -40,7 +40,10 @@
   "engines": {
     "node": "0.10.x"
   },
-  "dependencies": {
+   "peerDependencies": {
+    "urequire": "~0.7.0"
+  },
+ "dependencies": {
     "coffee-script": "*"
   }
 }

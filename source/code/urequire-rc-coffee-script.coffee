@@ -1,5 +1,6 @@
 coffee = require 'coffee-script'
 coffeeExtensions =   /.*\.(coffee\.md|litcoffee|coffee)$/ # RexExp for all coffeescript extensions
+literateExtensions = /.*\.(coffee\.md|litcoffee)$/i
 
 # This RC is using an [] instead of {}. Key names of RC are assumed from their posision in the array:
 module.exports = [
@@ -7,9 +8,17 @@ module.exports = [
 
     "'coffee-script' compiler." # `descr` at pos 1
 
-    [ '**/*.coffee', /.*\.(coffee\.md|litcoffee)$/i] # `filez` [] at pos 2
+    [ coffeeExtensions ] # `filez` [] at pos 2
 
-    (m)-> coffee.compile m.converted, @options  # `convert` Function at pos 3
+    (m)->
+      if m.srcFilename.match literateExtensions
+        @options.literate = true
+        converted = coffee.compile m.converted, @options  # `convert` Function at pos 3
+        @options.literate = false
+      else
+        converted = coffee.compile m.converted, @options  # `convert` Function at pos 3
+
+      converted
 
     (srcFn)-> # `convFilename` Function at pos 4
       # retrieve matched extension
